@@ -2,6 +2,7 @@ from flask import Flask, request, Response
 import requests
 import json
 import urllib.parse
+import os
 
 app = Flask(__name__)
 
@@ -506,10 +507,14 @@ def url_builder():
     return html_content
 
 if __name__ == '__main__':
+    # Gestione della porta tramite variabile d'ambiente
+    PORT = int(os.environ.get('PORT', 7860))
+    
     print("Avvio del server proxy M3U...")
-    print("Formato URL per singola playlist (esempio): http://localhost:7860/proxy?https://mfp.com:pass123&http://provider.com/playlist.m3u")
-    print("Formato URL per multiple playlist (esempio misto): http://localhost:7860/proxy?https://dom1.com:pass1&url1.m3u;https://dom2.com&url2.m3u")
+    print(f"Formato URL per singola playlist (esempio): http://localhost:{PORT}/proxy?https://mfp.com:pass123&http://provider.com/playlist.m3u")
+    print(f"Formato URL per multiple playlist (esempio misto): http://localhost:{PORT}/proxy?https://dom1.com:pass1&url1.m3u;https://dom2.com&url2.m3u")
+    print(f"Server in ascolto sulla porta: {PORT}")
     # Rimosso print per /test
     
     # Avvia il server
-    app.run(host='0.0.0.0', port=7860, debug=False)
+    app.run(host='0.0.0.0', port=PORT, debug=False)
