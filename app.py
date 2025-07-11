@@ -66,7 +66,12 @@ def rewrite_m3u_links(m3u_content, base_url, api_password):
             processed_url = line # Inizializza con il link originale, verrà modificato se le regole corrispondono
             
             # Controlla PRIMA se il link contiene 'vixsrc.to' (priorità alta)
-            if 'vixsrc.to' in line:
+            if 'vavoo.to' in line:
+                # Riscrive come extractor video per VixCloud
+                processed_url = f"{base_url}/proxy/hls/manifest.m3u8?api_password={api_password}&d={line}"
+                print(f"✅ Riscritto Vavoo: {line[:50]}... -> {processed_url[:50]}...")
+            
+            elif 'vixsrc.to' in line:
                 # Riscrive come extractor video per VixCloud
                 processed_url = f"{base_url}/extractor/video?host=VixCloud&redirect_stream=true&api_password={api_password}&d={line}"
                 print(f"✅ Riscritto VixCloud: {line[:50]}... -> {processed_url[:50]}...")
